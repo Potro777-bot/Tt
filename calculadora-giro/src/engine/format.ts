@@ -14,10 +14,19 @@ export function fmtMoney(x: number, currency?: 'USD' | 'BOB' | 'USDT'): string {
   return `${base} ${currency}`
 }
 
+const cache = new Map<number, Intl.NumberFormat>([
+  [0, f0],
+  [2, f2],
+  [4, f4],
+])
+
 export function fmtNumber(x: number, decimals = 2): string {
-  if (decimals === 0) return f0.format(x)
-  if (decimals === 4) return f4.format(x)
-  return f2.format(x)
+  let f = cache.get(decimals)
+  if (!f) {
+    f = num(decimals)
+    cache.set(decimals, f)
+  }
+  return f.format(x)
 }
 
 export function fmtRate(x: number): string {

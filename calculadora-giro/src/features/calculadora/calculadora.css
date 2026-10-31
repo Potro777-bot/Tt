@@ -14,3 +14,66 @@
   font-weight: 700;
   letter-spacing: -0.01em;
 }
+
+/* Banner del precio final en bolivianos */
+.price-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: var(--sp-4);
+  background: linear-gradient(135deg, color-mix(in oklab, var(--step-bob) 14%, var(--surface-1)), var(--surface-1) 70%);
+  border: 1px solid color-mix(in oklab, var(--step-bob) 35%, var(--hairline));
+  border-radius: var(--radius-lg);
+  padding: var(--sp-5);
+  box-shadow: var(--shadow-1);
+}
+.price-banner__main,
+.price-banner__side > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.price-banner__side {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-4);
+  border-left: 1px solid var(--hairline);
+  padding-left: var(--sp-4);
+}
+.price-banner__label {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.price-banner__value {
+  font-size: var(--fs-hero);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  word-break: break-word;
+}
+.price-banner__value--sm {
+  font-size: var(--fs-xl);
+}
+.price-banner__formula {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+@media (max-width: 960px) {
+  .price-banner {
+    grid-template-columns: 1fr;
+  }
+  .price-banner__side {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--hairline);
+    padding-top: var(--sp-4);
+  }
+}
+@media (max-width: 480px) {
+  .price-banner__side {
+    grid-template-columns: 1fr;
+  }
+}

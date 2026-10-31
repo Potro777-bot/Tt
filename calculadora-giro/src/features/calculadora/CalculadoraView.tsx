@@ -31,6 +31,33 @@ export function CalculadoraView({ store }: { store: AppStore }) {
         />
       </div>
 
+      {/* Precio final en bolivianos: lo que pagas tú y lo que cobras */}
+      <div className="price-banner">
+        <div className="price-banner__main">
+          <span className="price-banner__label">Precio final en bolivianos (lo que pagas por los USDT)</span>
+          <span className="price-banner__value tabular">{fmtMoney(r.bobInvested, 'BOB')}</span>
+          <span className="price-banner__formula">
+            {fmtMoney(r.usdt, 'USDT')} × {fmtRate(rates.buyRate)} Bs
+            {state.params.p2pFeePct > 0 ? ` × (1 + ${fmtPct(state.params.p2pFeePct)} comisión P2P)` : ''} = para que lleguen{' '}
+            {fmtMoney(r.giro, 'USD')} al beneficiario.
+          </span>
+        </div>
+        <div className="price-banner__side">
+          <div>
+            <span className="price-banner__label">Lo que debe entregar el cliente</span>
+            <span className="price-banner__value price-banner__value--sm tabular">{fmtMoney(r.clientBob, 'BOB')}</span>
+            <span className="price-banner__formula">Incluye tu comisión de {fmtMoney(r.myFee, 'USD')} ({fmtPct(rates.myFeePct)}).</span>
+          </div>
+          <div>
+            <span className="price-banner__label">Diferencia a tu favor</span>
+            <span className={`price-banner__value price-banner__value--sm tabular tone-${r.winning ? 'good' : 'bad'}`}>
+              {fmtMoney(r.profitBob, 'BOB')}
+            </span>
+            <span className="price-banner__formula">Lo que cobras menos lo que pagas.</span>
+          </div>
+        </div>
+      </div>
+
       {/* Titulares: qué comprar y qué debe llegar */}
       <div className="grid-3 headline">
         <StatTile

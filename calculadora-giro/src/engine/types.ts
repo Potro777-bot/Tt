@@ -90,6 +90,14 @@ export interface GiroResult {
   costUsd: number
   costPct: number
   bobPerUsd: number
+  /** Bs pagados por cada USDT comprado (TC de compra con comisión P2P). */
+  bobPerUsdt: number
+  /** Bs por cada USDT que realmente llega como giro: con comisiones Tower, colchón y fees contemplados. */
+  effectiveBobPerUsdt: number
+  /** Bs que paga el cliente por cada USDT comprado (incluye tu comisión). */
+  clientBobPerUsdt: number
+  /** Bs que paga el cliente por cada USD que recibe el beneficiario. */
+  clientBobPerUsd: number
   myFee: number
   totalFees: number
   clientUsd: number

@@ -237,6 +237,12 @@ export function CalculadoraView({ store }: { store: AppStore }) {
             />
             <Row label="Costo para ti como % del giro (sin tu comisión)" value={fmtPct(r.costPct)} />
             <Row label="Bs que te cuesta cada USD que recibe el beneficiario" note="Siempre mayor que el TC de compra." value={`${fmtRate(r.bobPerUsd)} Bs`} />
+            <Row
+              label="A cuánto te sale cada USDT con todo contemplado"
+              note="Bs pagados ÷ USDT que realmente llegan como giro. Detalle en Resumen."
+              value={`${fmtRate(r.effectiveBobPerUsdt)} Bs`}
+              emphasis
+            />
             <Row label="Comisión extra propia = tu ganancia" note="Giro × tu comisión %." value={fmtMoney(r.myFee, 'USD')} />
             <Row label="Total comisiones: Tower + extra" value={fmtMoney(r.totalFees, 'USD')} />
             <Row

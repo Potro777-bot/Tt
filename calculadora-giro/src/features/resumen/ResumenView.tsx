@@ -1,6 +1,6 @@
 import { BreakdownBar } from '../../charts/BreakdownBar'
-import { Card, Segmented, StatTile, StatusBadge } from '../../components/ui'
-import { fmtMoney, fmtPct } from '../../engine/format'
+import { Card, Row, Segmented, StatTile, StatusBadge } from '../../components/ui'
+import { fmtMoney, fmtPct, fmtRate } from '../../engine/format'
 import type { GiroResult } from '../../engine/types'
 import type { AppStore } from '../../state/store'
 import './resumen.css'
@@ -80,6 +80,31 @@ export function ResumenView({ store }: { store: AppStore }) {
           <span className="tile__sub">{fmtMoney(cur.profitBob, 'BOB')} sobre lo gastado</span>
         </div>
       </div>
+
+      <Card
+        title={`¿A cuánto te sale cada USDT? (modo ${state.mode})`}
+        subtitle="Precio por USDT con todo contemplado: comisiones de Tower Bank, colchón, fee de red y comisión de venta."
+      >
+        <div className="unit-price">
+          <div className="unit-price__hero">
+            <span className="tile__label">Cada USDT te sale, con todo contemplado</span>
+            <span className="unit-price__value tabular">{fmtRate(cur.effectiveBobPerUsdt)} Bs</span>
+            <span className="unit-price__formula">
+              {fmtMoney(cur.bobInvested, 'BOB')} pagados ÷ {fmtMoney(cur.giro / state.rates.sellPrice, 'USDT')} que de verdad llegan como giro (
+              {fmtMoney(cur.giro, 'USD')} ÷ {fmtRate(state.rates.sellPrice)}). Los otros {fmtMoney(cur.usdt - cur.giro / state.rates.sellPrice, 'USDT')} se van en
+              comisiones, colchón y fees.
+            </span>
+          </div>
+          <div className="unit-price__grid">
+            <StatTile label="Precio de compra por USDT" value={`${fmtRate(cur.bobPerUsdt)} Bs`} sub="Lo que pagas en P2P (con comisión P2P si la hay)" accent="var(--step-bob)" />
+            <StatTile label="Sobrecosto por USDT" value={`+${fmtRate(cur.effectiveBobPerUsdt - cur.bobPerUsdt)} Bs`} sub={`${fmtPct((cur.effectiveBobPerUsdt - cur.bobPerUsdt) / (cur.bobPerUsdt || 1))} encima del TC de compra`} accent="var(--series-2)" />
+            <StatTile label="Cada USD que recibe el beneficiario" value={`${fmtRate(cur.bobPerUsd)} Bs`} sub="Bs pagados ÷ giro" accent="var(--step-usd)" />
+            <StatTile label="Lo que paga el cliente por USDT" value={`${fmtRate(cur.clientBobPerUsdt)} Bs`} sub={`Con tu comisión del ${fmtPct(state.rates.myFeePct)}`} accent="var(--series-4)" />
+          </div>
+        </div>
+        <Row label="Lo que paga el cliente por cada USD que recibe el beneficiario" note="Bs que entrega el cliente ÷ giro." value={`${fmtRate(cur.clientBobPerUsd)} Bs`} />
+        <Row label="Tu margen por USDT" note="Lo que paga el cliente por USDT menos lo que te sale a ti (precio de compra)." value={`${fmtRate(cur.clientBobPerUsdt - cur.bobPerUsdt)} Bs`} tone={cur.winning ? 'good' : 'bad'} />
+      </Card>
 
       <Card
         title={`¿A dónde va cada USD que entrega el cliente? (modo ${state.mode})`}

@@ -78,6 +78,11 @@ function finish(
     costUsd,
     costPct: safeDiv(costUsd, giro),
     bobPerUsd: safeDiv(bobInvested, giro),
+    bobPerUsdt: safeDiv(bobInvested, usdt),
+    // USDT que se convierten en giro = giro ÷ precio de venta; el resto se va en comisiones, colchón y fees.
+    effectiveBobPerUsdt: r.sellPrice > 0 ? safeDiv(bobInvested, giro / r.sellPrice) : 0,
+    clientBobPerUsdt: safeDiv(clientBob, usdt),
+    clientBobPerUsd: safeDiv(clientBob, giro),
     myFee,
     totalFees: fees.total + myFee,
     clientUsd,

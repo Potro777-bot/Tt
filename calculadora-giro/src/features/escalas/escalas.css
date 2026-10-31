@@ -1,0 +1,34 @@
+.escalas-add {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.escalas-add__input {
+  width: 150px;
+  padding: 7px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+  background: var(--surface-editable);
+  font-size: var(--fs-sm);
+  text-align: right;
+}
+.escalas-add__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--focus);
+}
+.row-remove {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: var(--ink-3);
+  font-size: 16px;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+}
+.row-remove:hover {
+  background: var(--critical-soft);
+  color: var(--critical-ink);
+}

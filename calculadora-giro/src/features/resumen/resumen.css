@@ -1,0 +1,20 @@
+.tile--status {
+  justify-content: center;
+  gap: 6px;
+}
+.tile--status .badge {
+  align-self: flex-start;
+}
+.data-table tr.is-emphasis td {
+  font-weight: 650;
+  background: var(--surface-2);
+}
+.notes {
+  margin: var(--sp-2) 0 0;
+  padding-left: 1.2em;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
